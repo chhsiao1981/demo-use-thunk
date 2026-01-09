@@ -1,20 +1,29 @@
 import {
   getState,
   type ThunkModuleToFunc,
-  type UseThunk,
+  useThunk,
 } from "@chhsiao1981/use-thunk";
+import { useEffect } from "react";
 import * as DoGrandChild from "../reducers/grandChild";
 
 type TDoGrandChild = ThunkModuleToFunc<typeof DoGrandChild>;
 
 type Props = {
   theID: string;
-  useGrandChild: UseThunk<DoGrandChild.State, TDoGrandChild>;
+  name: string;
 };
 
 export default (props: Props) => {
-  const { theID, useGrandChild } = props;
+  const { theID, name } = props;
+
+  const useGrandChild = useThunk<DoGrandChild.State, TDoGrandChild>(
+    DoGrandChild,
+  );
   const [classState, doGrandChild] = useGrandChild;
+
+  useEffect(() => {
+    doGrandChild.init(theID, name);
+  }, [doGrandChild, theID, name]);
 
   const me = getState(classState, theID) || DoGrandChild.defaultState;
 

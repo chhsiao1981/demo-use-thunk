@@ -1,7 +1,7 @@
 {
   "name": "@chhsiao1981/demo-use-thunk",
   "private": true,
-  "version": "9.0.5",
+  "version": "9.0.5-1",
   "type": "module",
   "scripts": {
     "dev": "vite",

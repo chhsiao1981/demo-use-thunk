@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@chhsiao1981/use-thunk':
-        specifier: ^9.0.5
-        version: 9.0.5
+        specifier: link:../use-thunk
+        version: link:../use-thunk
       react:
         specifier: ^19.2.0
         version: 19.2.3
@@ -123,9 +123,6 @@ packages:
   '@babel/types@7.28.5':
     resolution: {integrity: sha512-qQ5m48eI/MFLQ5PxQj4PFaprjyCTLI37ElWMmNs0K8Lk3dVeOdNpB3ks8jc7yM5CDmVC73eMVk/trk3fgmrUpA==}
     engines: {node: '>=6.9.0'}
-
-  '@chhsiao1981/use-thunk@9.0.5':
-    resolution: {integrity: sha512-m/soXYwpK2MnX1T/yAiJ2AGe1t12R2NMKkO8RjtovcARLjRGvnv+tLHRLLirpTbAc7T0a62qVkHE0fJWO8c66Q==}
 
   '@esbuild/aix-ppc64@0.27.2':
     resolution: {integrity: sha512-GZMB+a0mOMZs4MpDbj8RJp4cw+w1WV5NYD6xzgvzUJ5Ek2jerwfO2eADyI6ExDSUED+1X8aMbegahsJi+8mgpw==}
@@ -1074,10 +1071,6 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
-  uuid@11.1.0:
-    resolution: {integrity: sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==}
-    hasBin: true
-
   vite@7.3.1:
     resolution: {integrity: sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -1244,11 +1237,6 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
-
-  '@chhsiao1981/use-thunk@9.0.5':
-    dependencies:
-      react: 19.2.3
-      uuid: 11.1.0
 
   '@esbuild/aix-ppc64@0.27.2':
     optional: true
@@ -2090,8 +2078,6 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
-
-  uuid@11.1.0: {}
 
   vite@7.3.1(@types/node@24.10.4):
     dependencies:

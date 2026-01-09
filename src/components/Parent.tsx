@@ -1,27 +1,28 @@
 import {
+  genUUID,
   getRootID,
   getState,
   type ThunkModuleToFunc,
-  type UseThunk,
+  useThunk,
 } from "@chhsiao1981/use-thunk";
-import type * as DoChild from "../reducers/child";
-import type * as DoGrandChild from "../reducers/grandChild";
+import { useEffect, useState } from "react";
 import * as DoParent from "../reducers/parent";
 import Child from "./Child";
 
 type TDoParent = ThunkModuleToFunc<typeof DoParent>;
-type TDoChild = ThunkModuleToFunc<typeof DoChild>;
-type TDoGrandChild = ThunkModuleToFunc<typeof DoGrandChild>;
 
-type Props = {
-  useParent: UseThunk<DoParent.State, TDoParent>;
-  useChild: UseThunk<DoChild.State, TDoChild>;
-  useGrandChild: UseThunk<DoGrandChild.State, TDoGrandChild>;
-};
+type Props = {};
 
 export default (props: Props) => {
-  const { useParent, useChild, useGrandChild } = props;
+  const useParent = useThunk<DoParent.State, TDoParent>(DoParent);
   const [classStateParent, doParent] = useParent;
+
+  const [childID0, _1] = useState(() => genUUID());
+  const [childID1, _2] = useState(() => genUUID());
+
+  useEffect(() => {
+    doParent.init();
+  }, [doParent]);
 
   const me = getState(classStateParent) || DoParent.defaultState;
   const myID = getRootID(classStateParent);
@@ -32,10 +33,6 @@ export default (props: Props) => {
 
   const onClickDecrease = () => {
     doParent.decrease(myID);
-  };
-
-  const onClickAddChild = () => {
-    doParent.addChild(myID);
   };
 
   return (
@@ -49,18 +46,9 @@ export default (props: Props) => {
       <button type="button" onClick={onClickDecrease}>
         Parent: -
       </button>
-      <button type="button" onClick={onClickAddChild}>
-        Parent: + child
-      </button>
       <hr />
-      {me.children.map((each, idx) => (
-        <Child
-          key={`child-${idx}`}
-          theID={each}
-          useChild={useChild}
-          useGrandChild={useGrandChild}
-        />
-      ))}
+      <Child theID={childID0} name={"0"} />
+      <Child theID={childID1} name={"1"} />
     </>
   );
 };

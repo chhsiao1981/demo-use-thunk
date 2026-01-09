@@ -1,30 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import viteLogo from "/vite.svg";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 
-import { type ThunkModuleToFunc, useThunk } from "@chhsiao1981/use-thunk";
 import Parent from "./components/Parent";
-import * as DoChild from "./reducers/child";
-import * as DoGrandChild from "./reducers/grandChild";
-import * as DoParent from "./reducers/parent";
-
-type TDoParent = ThunkModuleToFunc<typeof DoParent>;
-type TDoChild = ThunkModuleToFunc<typeof DoChild>;
-type TDoGrandChild = ThunkModuleToFunc<typeof DoGrandChild>;
 
 function App() {
   const [count, setCount] = useState(0);
-  const useParent = useThunk<DoParent.State, TDoParent>(DoParent);
-  const useChild = useThunk<DoChild.State, TDoChild>(DoChild);
-  const useGrandChild = useThunk<DoGrandChild.State, TDoGrandChild>(
-    DoGrandChild,
-  );
-  const [_, doParent] = useParent;
-
-  useEffect(() => {
-    doParent.init(useChild, useGrandChild);
-  }, [doParent, useChild, useGrandChild]);
 
   return (
     <>
@@ -45,11 +27,7 @@ function App() {
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
-      <Parent
-        useParent={useParent}
-        useChild={useChild}
-        useGrandChild={useGrandChild}
-      />
+      <Parent />
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>

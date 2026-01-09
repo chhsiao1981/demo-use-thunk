@@ -6,11 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "biome lint --error-on-warnings",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@chhsiao1981/use-thunk": "^9.0.5",
+    "@chhsiao1981/use-thunk": "^10.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

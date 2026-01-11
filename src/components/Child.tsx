@@ -1,10 +1,8 @@
 import {
-  genUUID,
   getState,
   type ThunkModuleToFunc,
   useThunk,
 } from "@chhsiao1981/use-thunk";
-import { useEffect, useState } from "react";
 import * as DoChild from "../reducers/child";
 import GrandChild from "./GrandChild";
 
@@ -12,21 +10,15 @@ type TDoChild = ThunkModuleToFunc<typeof DoChild>;
 
 type Props = {
   theID: string;
-  name: string;
+  grandChildID0: string;
+  grandChildID1: string;
 };
 
 export default (props: Props) => {
-  const { theID, name } = props;
+  const { theID, grandChildID0, grandChildID1 } = props;
 
   const useChild = useThunk<DoChild.State, TDoChild>(DoChild);
   const [classState, doChild] = useChild;
-
-  const [grandChildID0, _1] = useState(() => genUUID());
-  const [grandChildID1, _2] = useState(() => genUUID());
-
-  useEffect(() => {
-    doChild.init(theID, name);
-  }, [doChild, theID, name]);
 
   const me = getState(classState, theID) || DoChild.defaultState;
 
@@ -49,8 +41,8 @@ export default (props: Props) => {
       <button type="button" onClick={onClickDecrease}>
         Child ({me.name}): -
       </button>
-      <GrandChild theID={grandChildID0} name={`${me.name}-0`} />
-      <GrandChild theID={grandChildID1} name={`${me.name}-1`} />
+      <GrandChild theID={grandChildID0} />
+      <GrandChild theID={grandChildID1} />
     </>
   );
 };

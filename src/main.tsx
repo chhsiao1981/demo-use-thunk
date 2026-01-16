@@ -6,10 +6,12 @@ import App from "./App.tsx";
 import * as DoChild from "./reducers/child";
 import * as DoGrandChild from "./reducers/grandChild";
 import * as DoParent from "./reducers/parent";
+import * as DoUser from "./reducers/user";
 
 registerThunk(DoParent);
 registerThunk(DoChild);
 registerThunk(DoGrandChild);
+registerThunk(DoUser);
 console.info("after registerThunk");
 
 createRoot(document.getElementById("root")!).render(

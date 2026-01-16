@@ -1,11 +1,14 @@
 import {
+  getRootID,
   getState,
   type ThunkModuleToFunc,
   useThunk,
 } from "@chhsiao1981/use-thunk";
 import * as DoGrandChild from "../reducers/grandChild";
+import * as DoUser from "../reducers/user";
 
 type TDoGrandChild = ThunkModuleToFunc<typeof DoGrandChild>;
+type TDoUser = ThunkModuleToFunc<typeof DoUser>;
 
 type Props = {
   theID: string;
@@ -19,7 +22,13 @@ export default (props: Props) => {
   );
   const [classState, doGrandChild] = useGrandChild;
 
+  const useUser = useThunk<DoUser.State, TDoUser>(DoUser);
+  const [classStateUser, doUser] = useUser;
+
   const me = getState(classState, theID) || DoGrandChild.defaultState;
+
+  const user = getState(classStateUser) || DoUser.defaultState;
+  const userID = getRootID(classStateUser);
 
   const onClickIncrease = () => {
     doGrandChild.increase(theID);
@@ -32,7 +41,7 @@ export default (props: Props) => {
   return (
     <>
       <p>
-        GrandChild ({me.name}): {me.count}
+        GrandChild ({me.name}): {me.count} username: {user.name}
       </p>
       <button type="button" onClick={onClickIncrease}>
         GrandChild ({me.name}): +

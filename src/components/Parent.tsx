@@ -5,15 +5,17 @@ import {
   type ThunkModuleToFunc,
   useThunk,
 } from "@chhsiao1981/use-thunk";
-import { useEffect, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 import * as DoChild from "../reducers/child";
 import * as DoGrandChild from "../reducers/grandChild";
 import * as DoParent from "../reducers/parent";
+import * as DoUser from "../reducers/user";
 import Child from "./Child";
 
 type TDoParent = ThunkModuleToFunc<typeof DoParent>;
 type TDoChild = ThunkModuleToFunc<typeof DoChild>;
 type TDoGrandChild = ThunkModuleToFunc<typeof DoGrandChild>;
+type TDoUser = ThunkModuleToFunc<typeof DoUser>;
 
 // biome-ignore lint/complexity/noBannedTypes: Props is a required type.
 type Props = {};
@@ -29,6 +31,9 @@ export default (_props: Props) => {
     DoGrandChild,
   );
   const [_8, doGrandChild] = useGrandChild;
+
+  const useUser = useThunk<DoUser.State, TDoUser>(DoUser);
+  const [classStateUser, doUser] = useUser;
 
   const [childID0, _1] = useState(() => genUUID());
   const [childID1, _2] = useState(() => genUUID());
@@ -54,6 +59,8 @@ export default (_props: Props) => {
     doGrandChild.init(grandChildID1, "0-1");
     doGrandChild.init(grandChildID2, "1-0");
     doGrandChild.init(grandChildID3, "1-1");
+
+    doUser.init();
   }, [
     doParent,
     doChild,
@@ -64,10 +71,14 @@ export default (_props: Props) => {
     grandChildID1,
     grandChildID2,
     grandChildID3,
+    doUser,
   ]);
 
   const me = getState(classStateParent) || DoParent.defaultState;
   const myID = getRootID(classStateParent);
+
+  const user = getState(classStateUser) || DoUser.defaultState;
+  const userID = getRootID(classStateUser);
 
   const onClickIncrease = () => {
     doParent.increase(myID);
@@ -77,11 +88,20 @@ export default (_props: Props) => {
     doParent.decrease(myID);
   };
 
+  const onChangeUsername = (e: ChangeEvent<HTMLInputElement>) => {
+    const name = e.target?.value;
+    doUser.setName(userID, name);
+  };
+
   return (
     <>
       <p>
         Parent: {me.count} children: {me.children.length}
       </p>
+      <label>
+        username:
+        <input type="text" onChange={onChangeUsername} value={user.name} />
+      </label>
       <button type="button" onClick={onClickIncrease}>
         Parent: +
       </button>

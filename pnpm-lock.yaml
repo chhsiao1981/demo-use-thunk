@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@chhsiao1981/use-thunk':
-        specifier: ^10.0.0
-        version: 10.0.0
+        specifier: ^10.0.1
+        version: 10.0.1
       react:
         specifier: ^19.2.0
         version: 19.2.3
@@ -124,8 +124,8 @@ packages:
     resolution: {integrity: sha512-qQ5m48eI/MFLQ5PxQj4PFaprjyCTLI37ElWMmNs0K8Lk3dVeOdNpB3ks8jc7yM5CDmVC73eMVk/trk3fgmrUpA==}
     engines: {node: '>=6.9.0'}
 
-  '@chhsiao1981/use-thunk@10.0.0':
-    resolution: {integrity: sha512-IhW9UgXJwCocTjV9JwSwmvLPUCPxCMYymVmBRyR5dl86gwIvS+gjqyzKUpGPXKI7Bodmwc1tAhN8BfZa5O+A1g==}
+  '@chhsiao1981/use-thunk@10.0.1':
+    resolution: {integrity: sha512-WApLNDuchVd6DZKU4I+FgdFWO02xHSsJHjji2unD4D/X7UEFJuvKYso1iZ86e2dxwPnyhWXz90tL3XVFLY/zIw==}
 
   '@esbuild/aix-ppc64@0.27.2':
     resolution: {integrity: sha512-GZMB+a0mOMZs4MpDbj8RJp4cw+w1WV5NYD6xzgvzUJ5Ek2jerwfO2eADyI6ExDSUED+1X8aMbegahsJi+8mgpw==}
@@ -1245,7 +1245,7 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
-  '@chhsiao1981/use-thunk@10.0.0':
+  '@chhsiao1981/use-thunk@10.0.1':
     dependencies:
       react: 19.2.3
       uuid: 11.1.0

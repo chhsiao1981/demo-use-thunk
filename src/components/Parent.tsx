@@ -1,91 +1,42 @@
 import {
-  genUUID,
-  getRootID,
+  genID,
   getState,
-  type ThunkModuleToFunc,
+  type toDoModule,
   useThunk,
 } from "@chhsiao1981/use-thunk";
-import { type ChangeEvent, useEffect, useState } from "react";
-import * as DoChild from "../reducers/child";
-import * as DoGrandChild from "../reducers/grandChild";
-import * as DoParent from "../reducers/parent";
-import * as DoUser from "../reducers/user";
+import { type ChangeEvent, useState } from "react";
+import * as DoParent from "../thunks/parent";
+import * as DoUser from "../thunks/user";
 import Child from "./Child";
 
-type TDoParent = ThunkModuleToFunc<typeof DoParent>;
-type TDoChild = ThunkModuleToFunc<typeof DoChild>;
-type TDoGrandChild = ThunkModuleToFunc<typeof DoGrandChild>;
-type TDoUser = ThunkModuleToFunc<typeof DoUser>;
+type TDoParent = toDoModule<typeof DoParent>;
+type TDoUser = toDoModule<typeof DoUser>;
 
 // biome-ignore lint/complexity/noBannedTypes: Props is a required type.
 type Props = {};
 
 export default (_props: Props) => {
   const useParent = useThunk<DoParent.State, TDoParent>(DoParent);
-  const [classStateParent, doParent] = useParent;
-
-  const useChild = useThunk<DoChild.State, TDoChild>(DoChild);
-  const [_7, doChild] = useChild;
-
-  const useGrandChild = useThunk<DoGrandChild.State, TDoGrandChild>(
-    DoGrandChild,
-  );
-  const [_8, doGrandChild] = useGrandChild;
+  const [parent, doParent, parentID] = getState(useParent);
 
   const useUser = useThunk<DoUser.State, TDoUser>(DoUser);
-  const [classStateUser, doUser] = useUser;
+  const [user, doUser, userID] = getState(useUser);
 
-  const [childID0, _1] = useState(() => genUUID());
-  const [childID1, _2] = useState(() => genUUID());
+  const [childID0, _1] = useState(() => genID());
+  const [childID1, _2] = useState(() => genID());
 
-  const [grandChildID0, _3] = useState(() => genUUID());
-  const [grandChildID1, _4] = useState(() => genUUID());
+  const [grandChildID0, _3] = useState(() => genID());
+  const [grandChildID1, _4] = useState(() => genID());
 
-  const [grandChildID2, _5] = useState(() => genUUID());
-  const [grandChildID3, _6] = useState(() => genUUID());
-
-  useEffect(() => {
-    if (!childID0) {
-      return;
-    }
-    if (!childID1) {
-      return;
-    }
-    doParent.init();
-    doChild.init(childID0, "0");
-    doChild.init(childID1, "1");
-
-    doGrandChild.init(grandChildID0, "0-0");
-    doGrandChild.init(grandChildID1, "0-1");
-    doGrandChild.init(grandChildID2, "1-0");
-    doGrandChild.init(grandChildID3, "1-1");
-
-    doUser.init();
-  }, [
-    doParent,
-    doChild,
-    childID0,
-    childID1,
-    doGrandChild,
-    grandChildID0,
-    grandChildID1,
-    grandChildID2,
-    grandChildID3,
-    doUser,
-  ]);
-
-  const me = getState(classStateParent) || DoParent.defaultState;
-  const myID = getRootID(classStateParent);
-
-  const user = getState(classStateUser) || DoUser.defaultState;
-  const userID = getRootID(classStateUser);
+  const [grandChildID2, _5] = useState(() => genID());
+  const [grandChildID3, _6] = useState(() => genID());
 
   const onClickIncrease = () => {
-    doParent.increase(myID);
+    doParent.increase(parentID);
   };
 
   const onClickDecrease = () => {
-    doParent.decrease(myID);
+    doParent.decrease(parentID);
   };
 
   const onChangeUsername = (e: ChangeEvent<HTMLInputElement>) => {
@@ -93,10 +44,12 @@ export default (_props: Props) => {
     doUser.setName(userID, name);
   };
 
+  console.info("Parent: to render:", parentID);
+
   return (
     <>
       <p>
-        Parent: {me.count} children: {me.children.length}
+        Parent ({parentID}): {parent.count}
       </p>
       <label>
         username:

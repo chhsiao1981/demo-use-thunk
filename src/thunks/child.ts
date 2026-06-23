@@ -1,0 +1,35 @@
+import {
+  type State as rState,
+  type Thunk,
+  upsert,
+} from "@chhsiao1981/use-thunk";
+
+export const name = "demo-use-thunk/child";
+
+export interface State extends rState {
+  name: string;
+  count: number;
+}
+
+export const defaultState: State = {
+  name: "",
+  count: 0,
+};
+
+export const increase = (myID: string): Thunk<State> => {
+  return (set, get) => {
+    const state = get(myID);
+    const { count } = state;
+    set(myID, { count: count + 1 });
+  };
+};
+
+export const decrease = (myID: string): Thunk<State> => {
+  return (set, get) => {
+    const state = get(myID);
+    const { count } = state;
+    set(myID, { count: count - 1 });
+  };
+};
+
+export { upsert };

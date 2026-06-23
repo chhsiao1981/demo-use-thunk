@@ -1,12 +1,9 @@
-import {
-  getState,
-  type ThunkModuleToFunc,
-  useThunk,
-} from "@chhsiao1981/use-thunk";
-import * as DoChild from "../reducers/child";
+import { getState, type toDoModule, useThunk } from "@chhsiao1981/use-thunk";
+import { memo, useEffect } from "react";
+import * as DoChild from "../thunks/child";
 import GrandChild from "./GrandChild";
 
-type TDoChild = ThunkModuleToFunc<typeof DoChild>;
+type TDoChild = toDoModule<typeof DoChild>;
 
 type Props = {
   theID: string;
@@ -14,13 +11,16 @@ type Props = {
   grandChildID1: string;
 };
 
-export default (props: Props) => {
+export default memo((props: Props) => {
   const { theID, grandChildID0, grandChildID1 } = props;
 
   const useChild = useThunk<DoChild.State, TDoChild>(DoChild);
-  const [classState, doChild] = useChild;
+  const [child, doChild] = getState(useChild, theID);
 
-  const me = getState(classState, theID) || DoChild.defaultState;
+  // biome-ignore lint/correctness/useExhaustiveDependencies: doChild.upsert and theID are const.
+  useEffect(() => {
+    doChild.upsert(theID, { name: `child-${theID}` });
+  }, []);
 
   const onClickIncrease = () => {
     doChild.increase(theID);
@@ -30,19 +30,21 @@ export default (props: Props) => {
     doChild.decrease(theID);
   };
 
+  console.info("Child: to render:", theID);
+
   return (
     <>
       <p>
-        Child ({me.name}): {me.count} grandChildren: {me.grandChildren.length}
+        Child ({child.name}): {child.count}
       </p>
       <button type="button" onClick={onClickIncrease}>
-        Child ({me.name}): +
+        Child ({theID}): +
       </button>
       <button type="button" onClick={onClickDecrease}>
-        Child ({me.name}): -
+        Child ({theID}): -
       </button>
       <GrandChild theID={grandChildID0} />
       <GrandChild theID={grandChildID1} />
     </>
   );
-};
+});

@@ -1,34 +1,25 @@
-import {
-  getRootID,
-  getState,
-  type ThunkModuleToFunc,
-  useThunk,
-} from "@chhsiao1981/use-thunk";
-import * as DoGrandChild from "../reducers/grandChild";
-import * as DoUser from "../reducers/user";
+import { getState, type toDoModule, useThunk } from "@chhsiao1981/use-thunk";
+import { memo } from "react";
+import * as DoGrandChild from "../thunks/grandChild";
+import * as DoUser from "../thunks/user";
 
-type TDoGrandChild = ThunkModuleToFunc<typeof DoGrandChild>;
-type TDoUser = ThunkModuleToFunc<typeof DoUser>;
+type TDoGrandChild = toDoModule<typeof DoGrandChild>;
+type TDoUser = toDoModule<typeof DoUser>;
 
 type Props = {
   theID: string;
 };
 
-export default (props: Props) => {
+export default memo((props: Props) => {
   const { theID } = props;
 
   const useGrandChild = useThunk<DoGrandChild.State, TDoGrandChild>(
     DoGrandChild,
   );
-  const [classState, doGrandChild] = useGrandChild;
+  const [grandChild, doGrandChild] = getState(useGrandChild, theID);
 
   const useUser = useThunk<DoUser.State, TDoUser>(DoUser);
-  const [classStateUser, doUser] = useUser;
-
-  const me = getState(classState, theID) || DoGrandChild.defaultState;
-
-  const user = getState(classStateUser) || DoUser.defaultState;
-  const userID = getRootID(classStateUser);
+  const [user] = getState(useUser);
 
   const onClickIncrease = () => {
     doGrandChild.increase(theID);
@@ -38,17 +29,19 @@ export default (props: Props) => {
     doGrandChild.decrease(theID);
   };
 
+  console.info("GrandChild: to render:", theID);
+
   return (
     <>
       <p>
-        GrandChild ({me.name}): {me.count} username: {user.name}
+        GrandChild ({theID}): {grandChild.count} username: {user.name}
       </p>
       <button type="button" onClick={onClickIncrease}>
-        GrandChild ({me.name}): +
+        GrandChild ({theID}): +
       </button>
       <button type="button" onClick={onClickDecrease}>
-        GrandChild ({me.name}): -
+        GrandChild ({theID}): -
       </button>
     </>
   );
-};
+});

@@ -3,18 +3,16 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
-import * as DoChild from "./reducers/child";
-import * as DoGrandChild from "./reducers/grandChild";
-import * as DoParent from "./reducers/parent";
-import * as DoUser from "./reducers/user";
+import Parent from "./components/Parent.tsx";
+import * as DoChild from "./thunks/child.ts";
+import * as DoGrandChild from "./thunks/grandChild.ts";
+import * as DoParent from "./thunks/parent.ts";
+import * as DoUser from "./thunks/user.ts";
 
-// @ts-expect-error registerThunk
 registerThunk(DoParent);
-// @ts-expect-error registerThunk
-registerThunk(DoChild);
-// @ts-expect-error registerThunk
+// because of including upsert, ts cannot know the State for DoChild.
+registerThunk<DoChild.State>(DoChild);
 registerThunk(DoGrandChild);
-// @ts-expect-error registerThunk
 registerThunk(DoUser);
 console.info("after registerThunk");
 
@@ -22,6 +20,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThunkContext>
       <App />
+      <Parent />
     </ThunkContext>
   </StrictMode>,
 );

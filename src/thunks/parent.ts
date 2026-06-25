@@ -1,8 +1,8 @@
-import type { State as rState, Thunk } from "@chhsiao1981/use-thunk";
+import type { State as _State, Thunk } from "@chhsiao1981/use-thunk";
 
 export const name = "demo-use-thunk/parent";
 
-export interface State extends rState {
+export interface State extends _State {
   count: number;
 }
 

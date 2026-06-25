@@ -1,35 +1,24 @@
-import {
-  genID,
-  getState,
-  type toDoModule,
-  useThunk,
-} from "@chhsiao1981/use-thunk";
+import { genID, getState, useThunk } from "@chhsiao1981/use-thunk";
 import { type ChangeEvent, useState } from "react";
 import * as DoParent from "../thunks/parent";
 import * as DoUser from "../thunks/user";
 import Child from "./Child";
 
-type TDoParent = toDoModule<typeof DoParent>;
-type TDoUser = toDoModule<typeof DoUser>;
-
-// biome-ignore lint/complexity/noBannedTypes: Props is a required type.
-type Props = {};
-
-export default (_props: Props) => {
-  const useParent = useThunk<DoParent.State, TDoParent>(DoParent);
+export default () => {
+  const useParent = useThunk<DoParent.State, typeof DoParent>(DoParent);
   const [parent, doParent, parentID] = getState(useParent);
 
-  const useUser = useThunk<DoUser.State, TDoUser>(DoUser);
+  const useUser = useThunk<DoUser.State, typeof DoUser>(DoUser);
   const [user, doUser, userID] = getState(useUser);
 
-  const [childID0, _1] = useState(() => genID());
-  const [childID1, _2] = useState(() => genID());
+  const [childID0] = useState(() => genID());
+  const [childID1] = useState(() => genID());
 
-  const [grandChildID0, _3] = useState(() => genID());
-  const [grandChildID1, _4] = useState(() => genID());
+  const [grandChildID0] = useState(() => genID());
+  const [grandChildID1] = useState(() => genID());
 
-  const [grandChildID2, _5] = useState(() => genID());
-  const [grandChildID3, _6] = useState(() => genID());
+  const [grandChildID2] = useState(() => genID());
+  const [grandChildID3] = useState(() => genID());
 
   const onClickIncrease = () => {
     doParent.increase(parentID);

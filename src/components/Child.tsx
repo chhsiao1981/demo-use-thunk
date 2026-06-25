@@ -1,9 +1,7 @@
-import { getState, type toDoModule, useThunk } from "@chhsiao1981/use-thunk";
+import { getState, useThunk } from "@chhsiao1981/use-thunk";
 import { memo, useEffect } from "react";
 import * as DoChild from "../thunks/child";
 import GrandChild from "./GrandChild";
-
-type TDoChild = toDoModule<typeof DoChild>;
 
 type Props = {
   theID: string;
@@ -14,7 +12,7 @@ type Props = {
 export default memo((props: Props) => {
   const { theID, grandChildID0, grandChildID1 } = props;
 
-  const useChild = useThunk<DoChild.State, TDoChild>(DoChild);
+  const useChild = useThunk<DoChild.State, typeof DoChild>(DoChild);
   const [child, doChild] = getState(useChild, theID);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: doChild.upsert and theID are const.

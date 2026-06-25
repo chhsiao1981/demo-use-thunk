@@ -10,8 +10,7 @@ import * as DoParent from "./thunks/parent.ts";
 import * as DoUser from "./thunks/user.ts";
 
 registerThunk(DoParent);
-// because of including upsert, ts cannot know the State for DoChild.
-registerThunk<DoChild.State>(DoChild);
+registerThunk(DoChild);
 registerThunk(DoGrandChild);
 registerThunk(DoUser);
 console.info("after registerThunk");

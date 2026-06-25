@@ -1,7 +1,7 @@
 import { getState, useThunk } from "@chhsiao1981/use-thunk";
 import { memo } from "react";
-import * as DoGrandChild from "../thunks/grandChild";
-import * as DoUser from "../thunks/user";
+import * as ModGrandChild from "../thunks/grandChild";
+import * as ModUser from "../thunks/user";
 
 type Props = {
   theID: string;
@@ -10,12 +10,12 @@ type Props = {
 export default memo((props: Props) => {
   const { theID } = props;
 
-  const useGrandChild = useThunk<DoGrandChild.State, typeof DoGrandChild>(
-    DoGrandChild,
+  const useGrandChild = useThunk<ModGrandChild.State, typeof ModGrandChild>(
+    ModGrandChild,
   );
   const [grandChild, doGrandChild] = getState(useGrandChild, theID);
 
-  const useUser = useThunk<DoUser.State, typeof DoUser>(DoUser);
+  const useUser = useThunk<ModUser.State, typeof ModUser>(ModUser);
   const [user] = getState(useUser);
 
   const onClickIncrease = () => {
@@ -31,7 +31,7 @@ export default memo((props: Props) => {
   return (
     <>
       <p>
-        GrandChild ({theID}): {grandChild.count} username: {user.name}
+        GrandChild ({theID}): {grandChild.count} my name: {user.name}
       </p>
       <button type="button" onClick={onClickIncrease}>
         GrandChild ({theID}): +

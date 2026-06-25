@@ -1,14 +1,14 @@
 import { genID, getState, useThunk } from "@chhsiao1981/use-thunk";
 import { type ChangeEvent, useState } from "react";
-import * as DoParent from "../thunks/parent";
-import * as DoUser from "../thunks/user";
+import * as ModParent from "../thunks/parent";
+import * as ModUser from "../thunks/user";
 import Child from "./Child";
 
 export default () => {
-  const useParent = useThunk<DoParent.State, typeof DoParent>(DoParent);
+  const useParent = useThunk<ModParent.State, typeof ModParent>(ModParent);
   const [parent, doParent, parentID] = getState(useParent);
 
-  const useUser = useThunk<DoUser.State, typeof DoUser>(DoUser);
+  const useUser = useThunk<ModUser.State, typeof ModUser>(ModUser);
   const [user, doUser, userID] = getState(useUser);
 
   const [childID0] = useState(() => genID());

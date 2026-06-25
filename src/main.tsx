@@ -4,15 +4,15 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import Parent from "./components/Parent.tsx";
-import * as DoChild from "./thunks/child.ts";
-import * as DoGrandChild from "./thunks/grandChild.ts";
-import * as DoParent from "./thunks/parent.ts";
-import * as DoUser from "./thunks/user.ts";
+import * as ModChild from "./thunks/child.ts";
+import * as ModGrandChild from "./thunks/grandChild.ts";
+import * as ModParent from "./thunks/parent.ts";
+import * as ModUser from "./thunks/user.ts";
 
-registerThunk(DoParent);
-registerThunk(DoChild);
-registerThunk(DoGrandChild);
-registerThunk(DoUser);
+registerThunk(ModParent);
+registerThunk(ModChild);
+registerThunk(ModGrandChild);
+registerThunk(ModUser);
 console.info("after registerThunk");
 
 createRoot(document.getElementById("root")!).render(

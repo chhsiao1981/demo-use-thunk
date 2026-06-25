@@ -1,21 +1,27 @@
 import { useState } from "react";
-import "./App.css";
+import styles from "./App.module.css";
 import Parent from "./components/Parent";
+import Header from "./Header";
 
-function App() {
+export default () => {
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <h1>Vite + React + useThunk</h1>
-      <div className="card">
-        <button type="button" onClick={() => setCount((count) => count + 1)}>
-          Component count is {count}
-        </button>
+      <Header />
+      <div className={styles.root}>
+        <h1>
+          <a href="https://vite.dev/">Vite</a> +{" "}
+          <a href="https://react.dev/">React</a> +{" "}
+          <a href="https://github.com/chhsiao1981/use-thunk">useThunk</a>
+        </h1>
+        <div className={styles.card}>
+          <button type="button" onClick={() => setCount((count) => count + 1)}>
+            Component count is {count}
+          </button>
+        </div>
+        <Parent />
       </div>
-      <Parent />
     </>
   );
-}
-
-export default App;
+};

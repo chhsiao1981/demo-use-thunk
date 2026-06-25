@@ -37,11 +37,12 @@ export default () => {
 
   return (
     <>
+      <hr />
       <p>
         Parent ({parentID}): {parent.count}
       </p>
       <label>
-        username:
+        My name:
         <input type="text" onChange={onChangeUsername} value={user.name} />
       </label>
       <button type="button" onClick={onClickIncrease}>
@@ -50,7 +51,6 @@ export default () => {
       <button type="button" onClick={onClickDecrease}>
         Parent: -
       </button>
-      <hr />
       <Child
         theID={childID0}
         grandChildID0={grandChildID0}

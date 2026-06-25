@@ -1,8 +1,4 @@
-import {
-  type State as rState,
-  type Thunk,
-  upsert,
-} from "@chhsiao1981/use-thunk";
+import type { State as rState, Thunk } from "@chhsiao1981/use-thunk";
 
 export const name = "demo-use-thunk/child";
 
@@ -31,5 +27,3 @@ export const decrease = (myID: string): Thunk<State> => {
     set(myID, { count: count - 1 });
   };
 };
-
-export { upsert };

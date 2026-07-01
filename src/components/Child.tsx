@@ -1,4 +1,4 @@
-import { getState, useThunk } from "@chhsiao1981/use-thunk";
+import { useThunk } from "@chhsiao1981/use-thunk";
 import { memo, useEffect } from "react";
 import * as ModChild from "../thunks/child";
 import GrandChild from "./GrandChild";
@@ -12,8 +12,10 @@ type Props = {
 export default memo((props: Props) => {
   const { theID, grandChildID0, grandChildID1 } = props;
 
-  const useChild = useThunk<ModChild.State, typeof ModChild>(ModChild);
-  const [child, doChild] = getState(useChild, theID);
+  const [child, doChild] = useThunk<ModChild.State, typeof ModChild>(
+    ModChild,
+    theID,
+  );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: doChild.upsert and theID are const.
   useEffect(() => {

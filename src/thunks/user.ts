@@ -10,8 +10,8 @@ export const defaultState: State = {
   name: "",
 };
 
-export const setName = (myID: string, name: string): Thunk<State> => {
+export const setName = (name: string): Thunk<State> => {
   return (set) => {
-    set(myID, { name });
+    set(null, { name });
   };
 };

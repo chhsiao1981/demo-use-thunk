@@ -1,11 +1,10 @@
-import { getState, useThunk } from "@chhsiao1981/use-thunk";
+import { useThunk } from "@chhsiao1981/use-thunk";
 import githubLogo from "./assets/github.svg";
 import styles from "./Header.module.css";
-import * as DoUser from "./thunks/user";
+import * as ModUser from "./thunks/user";
 
 export default () => {
-  const useUser = useThunk<DoUser.State, typeof DoUser>(DoUser);
-  const [user] = getState(useUser);
+  const [user] = useThunk<ModUser.State, typeof ModUser>(ModUser);
   const username = user.name || "my friend";
   return (
     <div className={styles.root}>

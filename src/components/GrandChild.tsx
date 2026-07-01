@@ -1,4 +1,4 @@
-import { getState, useThunk } from "@chhsiao1981/use-thunk";
+import { useThunk } from "@chhsiao1981/use-thunk";
 import { memo } from "react";
 import * as ModGrandChild from "../thunks/grandChild";
 import * as ModUser from "../thunks/user";
@@ -11,13 +11,12 @@ type Props = {
 export default memo((props: Props) => {
   const { theID } = props;
 
-  const useGrandChild = useThunk<ModGrandChild.State, typeof ModGrandChild>(
-    ModGrandChild,
-  );
-  const [grandChild, doGrandChild] = getState(useGrandChild, theID);
+  const [grandChild, doGrandChild] = useThunk<
+    ModGrandChild.State,
+    typeof ModGrandChild
+  >(ModGrandChild, theID);
 
-  const useUser = useThunk<ModUser.State, typeof ModUser>(ModUser);
-  const [user] = getState(useUser);
+  const [user] = useThunk<ModUser.State, typeof ModUser>(ModUser);
 
   const onClickIncrease = () => {
     doGrandChild.increase(theID);

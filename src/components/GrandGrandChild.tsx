@@ -9,7 +9,7 @@ type Props = {
 export default memo((props: Props) => {
   const { grandChildID, grandChild } = props;
 
-  console.info("GrandGrandChild: to render:", grandChildID);
+  console.info("GrandGrandChild: to render (from grandChild):", grandChildID);
   return (
     <p>
       GrandGrandChild from {grandChildID}: count: {grandChild.count}

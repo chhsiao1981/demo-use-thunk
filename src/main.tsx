@@ -13,7 +13,6 @@ registerThunk(ModParent);
 registerThunk(ModChild);
 registerThunk(ModGrandChild);
 registerThunk(ModUser);
-console.info("after registerThunk");
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

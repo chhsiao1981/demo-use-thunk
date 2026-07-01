@@ -456,71 +456,99 @@ var import_jsx_runtime = require_jsx_runtime(), o = (e) => {
 	for (let n in e) e.hasOwnProperty(n) && (t[n] = o(e[n]));
 	return t;
 }, s = 1, c = () => (s += 1, `${s}`), l = "@chhsiao1981/use-thunk/SET_DEFAULT_ID", u = (e) => ({
-	myID: e,
+	id: e,
 	type: l
 }), d = (e, t) => {
-	let { myID: n } = t;
-	return Object.assign({}, e, { defaultID: n });
-}, f = "@chhsiao1981/use-thunk/INIT", p = (e, t) => ({
-	myID: e,
-	type: f,
+	let { id: n } = t;
+	return e.defaultID = n, e;
+}, f = (e, t) => typeof e == "string" || e == null ? [e, t] : [void 0, e], p = "@chhsiao1981/use-thunk/INIT", m = (e, t) => ({
+	id: e,
+	type: p,
 	state: t
-}), m = (e, t) => {
-	let { myID: n, state: r } = t, i = {
+}), h = (e, t) => {
+	let { id: n, state: r } = t, i = {
 		id: n,
 		state: r
-	}, a = Object.assign({}, e.nodes, { [n]: i });
-	return Object.assign({}, e, { nodes: a });
-}, h = (e) => (t, n, r, i, a) => {
-	let o = e.myID ?? c(), { state: s } = e;
-	t(p(o, s));
-	let { defaultID: l } = a();
-	l || t(u(o));
-}, g = "@chhsiao1981/use-thunk/UPDATE", _ = (e, t) => ({
-	myID: e,
-	type: g,
+	};
+	return e.nodes[n] = i, e;
+}, g = (e, t) => (n, r, i, a, s) => {
+	let [l, d] = f(e, t), { defaultState: p } = s(), h = d || o(p), g = l || c();
+	n(m(g, h));
+	let { defaultID: _ } = s();
+	_ || n(u(g));
+}, _ = (e) => e.defaultID, v = (e, t) => {
+	let n = e || _(t) || c();
+	return t.defaultID ||= n, n;
+}, b = (e, t) => {
+	let n = t || _(e);
+	if (!n) return null;
+	let r = e.nodes[n];
+	return r ? r.state : null;
+}, x = (e, t) => {
+	let n = v(t, e), r = b(e, n);
+	if (r) return r;
+	let i = o(e.defaultState), a = {
+		id: n,
+		state: i
+	};
+	return e.nodes[n] = a, i;
+}, S = (e, t) => {
+	let [n, r] = e, i = v(t, n);
+	return [
+		x(n, i),
+		r,
+		i
+	];
+}, C = "@chhsiao1981/use-thunk/UPDATE", w = (e, t) => (n, r, i, a, o) => {
+	let [s, c] = f(e, t), l = s || _(o());
+	!l || !c || n(T(l, c));
+}, T = (e, t) => ({
+	id: e,
+	type: C,
 	data: t
-}), v = (e, t) => {
-	let { myID: n, data: r } = t, i = e.nodes[n];
+}), E = (e, t) => {
+	let { id: n, data: r } = t, i = e.nodes[n];
 	if (!i) return e;
-	let a = Object.assign({}, i.state, r), o = Object.assign({}, i, { state: a }), s = Object.assign({}, e.nodes, { [n]: o });
-	return Object.assign({}, e, { nodes: s });
-}, y = "@chhsiao1981/use-thunk/REMOVE", b = (e) => ({
-	myID: e,
-	type: y
-}), x = (e, t) => {
-	let { myID: n } = t;
-	if (!e.nodes[n]) return e;
-	let r = Object.keys(e.nodes).filter((e) => e !== n).reduce((t, n) => (t[n] = e.nodes[n], t), {}), i = Object.assign({}, e, { nodes: r });
-	return i.defaultID === n && (i.defaultID = null), i;
-}, S = "@chhsiao1981/use-thunk/UPSERT", C = (e, t) => ({
-	myID: e,
-	type: S,
+	let a = Object.assign({}, i.state, r), o = Object.assign({}, i, { state: a });
+	return e.nodes[n] = o, e;
+}, D = "@chhsiao1981/use-thunk/REMOVE", O = (e) => (t, n, r, i, a) => {
+	let o = e || _(a());
+	o && t(k(o));
+}, k = (e) => ({
+	id: e,
+	type: D
+}), A = (e, t) => {
+	let { id: n } = t;
+	return e.nodes[n] ? (delete e.nodes[n], e.defaultID === n && (e.defaultID = null), e) : e;
+}, j = "@chhsiao1981/use-thunk/UPSERT", M = (e, t) => (n, r, i, a, o) => {
+	let [s, c] = f(e, t);
+	c && n(N(v(s, o()), c));
+}, N = (e, t) => ({
+	id: e,
+	type: j,
 	data: t
-}), w = (e, t) => {
-	let { myID: n, data: r } = t, i = e.nodes[n] ?? {
+}), P = (e, t) => {
+	let { id: n, data: r } = t, i = e.nodes[n] ?? {
 		id: n,
 		state: o(e.defaultState)
-	}, a = Object.assign({}, i.state, r), s = Object.assign({}, i, { state: a }), c = Object.assign({}, e.nodes, { [n]: s });
-	return Object.assign({}, e, { nodes: c });
-}, T = {
-	init: h,
-	update: _,
-	upsert: C,
-	remove: b,
+	}, a = Object.assign({}, i.state, r), s = Object.assign({}, i, { state: a });
+	return e.nodes[n] = s, e;
+}, F = {
+	init: g,
+	update: w,
+	upsert: M,
+	remove: O,
 	setDefaultID: u
-}, E = {
+}, I = {
 	theMap: {},
 	theList: []
-}, D = (e) => {
-	let { modules: t, children: n } = e, o = t || E.theList;
+}, R = (e) => {
+	let { modules: t, children: n } = e, o = t || I.theList;
 	if (o.length === 0) return n;
-	let s = o[0], { context: c, refModuleState: l } = E.theMap[s], [u, d] = (0, import_react.useState)(l.current);
-	l.current = u;
-	let f = (0, import_react.useMemo)(() => ({
-		refModuleState: l,
-		setModuleState: d
-	}), [u]), p = o.length === 1 ? n : D({
+	let s = o[0], { context: c, moduleState: l } = I.theMap[s], [u, d] = (0, import_react.useState)(() => ({ current: l })), f = (0, import_react.useMemo)(() => ({
+		refModuleState: u,
+		setRefModuleState: d
+	}), [u]), p = o.length === 1 ? n : R({
 		modules: o.slice(1),
 		children: n
 	});
@@ -528,89 +556,64 @@ var import_jsx_runtime = require_jsx_runtime(), o = (e) => {
 		value: f,
 		children: p
 	});
-}, O = (t) => {
+}, z = (t) => {
 	let { name: n, defaultState: r } = t;
-	if (E.theMap[n]) {
+	if (I.theMap[n]) {
 		console.warn("registerThunk: already init:", n);
 		return;
 	}
 	let i = {
-		name: n,
+		name: t.name,
 		nodes: {},
 		defaultState: r
-	}, a = () => {}, o = { current: i }, s = (0, import_react.createContext)({
-		refModuleState: o,
-		setModuleState: a
+	}, a = (0, import_react.createContext)({
+		refModuleState: { current: i },
+		setRefModuleState: () => {}
 	});
-	E.theMap[n] = {
-		context: s,
-		refModuleState: o
-	}, E.theList = Object.keys(E.theMap).sort(), console.info("registerThunk: done:", n);
-}, k = (e, t = !1) => e.defaultID ?? (t ? c() : ""), j = (e, t) => {
-	let n = t || k(e);
-	if (!n) return null;
-	let r = e.nodes[n];
-	return r ? r.state : null;
-}, M = (e, t) => {
-	let n = t || k(e, !0), r = j(e, n);
-	if (r) return r;
-	let i = o(e.defaultState), a = {
-		id: n,
-		state: i
-	};
-	return e.nodes[n] = a, e.defaultID ||= n, i;
-}, N = (e, t) => {
-	let [n, r] = e, i = t || k(n, !0);
-	return [
-		M(n, i),
-		r,
-		i
-	];
-}, P = {
-	[f]: m,
-	[g]: v,
-	[y]: x,
-	[S]: w,
+	I.theMap[n] = {
+		context: a,
+		moduleState: i
+	}, I.theList = Object.keys(I.theMap), console.info("registerThunk: done:", n);
+}, B = {}, V = (e, t) => {
+	let n = Object.keys(e).filter((t) => typeof e[t] == "function").reduce((n, r) => {
+		let i = e[r];
+		return n[r] = (...e) => t(i(...e)), n;
+	}, {});
+	return Object.keys(F).reduce((e, n) => {
+		if (e[n]) return e;
+		let r = F[n];
+		return e[n] = (...e) => t(r(...e)), e;
+	}, n), B[e.name] = n, n;
+}, U = {
+	[p]: h,
+	[C]: E,
+	[D]: A,
+	[j]: P,
 	[l]: d
-}, F = () => (e, t) => P[t.type] ? P[t.type](e, t) : e, I = (e, t, n) => (Object.keys(e).filter((t) => typeof e[t] == "function").reduce((n, r) => {
-	if (n[r]) return n;
-	let i = e[r];
-	return n[r] = (...e) => t(i(...e)), n;
-}, n), Object.keys(T).reduce((e, n) => {
-	if (e[n]) return e;
-	let r = T[n];
-	return e[n] = (...e) => t(r(...e)), e;
-}, n), n), L = (e, r) => {
-	let { context: i } = E.theMap[r], { refModuleState: a, setModuleState: o } = (0, import_react.useContext)(i), s = (0, import_react.useCallback)(() => a.current, [a]), c = (0, import_react.useCallback)((e) => {
-		a.current = e, o(e);
-	}, [a, o]), l = (0, import_react.useCallback)((e) => j(s(), e), [s]), u = (0, import_react.useCallback)((e) => M(s(), e), [s]), d = (0, import_react.useCallback)((t) => e(s(), t), [e, s]), f = (0, import_react.useCallback)((e) => {
+}, W = (e, t) => U[t.type] ? U[t.type](e, t) : e, G = (e) => {
+	let { context: r } = I.theMap[e], { refModuleState: i, setRefModuleState: a } = (0, import_react.useContext)(r), o = (0, import_react.useCallback)(() => i.current, [i.current]), s = (0, import_react.useCallback)((e) => b(o(), e), [o]), c = (0, import_react.useCallback)((e) => x(o(), e), [o]), l = (0, import_react.useCallback)((e) => {
 		if (typeof e == "function") {
-			e(p, u, l, f, s);
+			e(u, c, s, l, o);
 			return;
 		}
-		c(d(e));
-	}, [
-		s,
-		c,
-		d
-	]), p = (0, import_react.useCallback)((e, t) => {
-		if (typeof e == "string") {
+		a({ current: W(o(), e) });
+	}, [o]), u = (0, import_react.useCallback)((e, t) => {
+		if (typeof e == "string" || e == null) {
 			if (!t) return;
-			c(d(C(e, t)));
+			l(M(e, t));
 			return;
 		}
-		f(e);
-	}, [
-		s,
-		c,
-		d
-	]);
-	return [a.current, p];
-}, R = {}, z = (e) => {
-	let { name: t } = e, n = !R[t];
-	n && (R[t] = {});
-	let i = R[t], [a, o] = L((0, import_react.useMemo)(() => F(), []), t), s = (0, import_react.useMemo)(() => [a, i], [a, i]);
-	return n && I(e, o, i), s;
+		l(e);
+	}, [l]);
+	return [i, u];
+}, K = (e) => {
+	let { name: t } = e, [n, i] = G(t);
+	B[t] || V(e, i);
+	let a = B[t];
+	return (0, import_react.useMemo)(() => [n, a], [n]);
+}, J = (e, t) => {
+	let [n, i] = K(e);
+	return (0, import_react.useMemo)(() => S([n.current, i], t), [n, t]);
 };
 //#endregion
 //#region node_modules/scheduler/cjs/scheduler.production.js
@@ -10121,16 +10124,16 @@ var parent_exports = /* @__PURE__ */ __exportAll({
 });
 var name$3 = "demo-use-thunk/parent";
 var defaultState$3 = { count: 0 };
-var increase$2 = (myID) => {
+var increase$2 = () => {
 	return (set, get) => {
-		const { count } = get(myID);
-		set(myID, { count: count + 1 });
+		const { count } = get();
+		set(null, { count: count + 1 });
 	};
 };
-var decrease$2 = (myID) => {
+var decrease$2 = () => {
 	return (set, get) => {
-		const { count } = get(myID);
-		set(myID, { count: count - 1 });
+		const { count } = get();
+		set(null, { count: count - 1 });
 	};
 };
 //#endregion
@@ -10142,9 +10145,9 @@ var user_exports = /* @__PURE__ */ __exportAll({
 });
 var name$2 = "demo-use-thunk/user";
 var defaultState$2 = { name: "" };
-var setName = (myID, name) => {
+var setName = (name) => {
 	return (set) => {
-		set(myID, { name });
+		set(null, { name });
 	};
 };
 //#endregion
@@ -10198,7 +10201,7 @@ var decrease = (myID) => {
 //#region src/components/GrandGrandChild.tsx
 var GrandGrandChild_default = (0, import_react.memo)((props) => {
 	const { grandChildID, grandChild } = props;
-	console.info("GrandGrandChild: to render:", grandChildID);
+	console.info("GrandGrandChild: to render (from grandChild):", grandChildID);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
 		"GrandGrandChild from ",
 		grandChildID,
@@ -10210,8 +10213,8 @@ var GrandGrandChild_default = (0, import_react.memo)((props) => {
 //#region src/components/GrandChild.tsx
 var GrandChild_default = (0, import_react.memo)((props) => {
 	const { theID } = props;
-	const [grandChild, doGrandChild] = N(z(grandChild_exports), theID);
-	const [user] = N(z(user_exports));
+	const [grandChild, doGrandChild] = J(grandChild_exports, theID);
+	const [user] = J(user_exports);
 	const onClickIncrease = () => {
 		doGrandChild.increase(theID);
 	};
@@ -10256,7 +10259,7 @@ var GrandChild_default = (0, import_react.memo)((props) => {
 //#region src/components/Child.tsx
 var Child_default = (0, import_react.memo)((props) => {
 	const { theID, grandChildID0, grandChildID1 } = props;
-	const [child, doChild] = N(z(child_exports), theID);
+	const [child, doChild] = J(child_exports, theID);
 	(0, import_react.useEffect)(() => {
 		doChild.upsert(theID, { name: `child-${theID}` });
 	}, []);
@@ -10299,8 +10302,8 @@ var Child_default = (0, import_react.memo)((props) => {
 //#endregion
 //#region src/components/Parent.tsx
 var Parent_default = () => {
-	const [parent, doParent, parentID] = N(z(parent_exports));
-	const [user, doUser, userID] = N(z(user_exports));
+	const [parent, doParent, parentID] = J(parent_exports);
+	const [user, doUser] = J(user_exports);
 	const [childID0] = (0, import_react.useState)(() => c());
 	const [childID1] = (0, import_react.useState)(() => c());
 	const [grandChildID0] = (0, import_react.useState)(() => c());
@@ -10308,14 +10311,14 @@ var Parent_default = () => {
 	const [grandChildID2] = (0, import_react.useState)(() => c());
 	const [grandChildID3] = (0, import_react.useState)(() => c());
 	const onClickIncrease = () => {
-		doParent.increase(parentID);
+		doParent.increase();
 	};
 	const onClickDecrease = () => {
-		doParent.decrease(parentID);
+		doParent.decrease();
 	};
 	const onChangeUsername = (e) => {
 		const name = e.target?.value;
-		doUser.setName(userID, name);
+		doUser.setName(name);
 	};
 	console.info("Parent: to render:", parentID);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
@@ -10364,7 +10367,7 @@ var Header_module_default = {
 //#endregion
 //#region src/Header.tsx
 var Header_default = () => {
-	const [user] = N(z(user_exports));
+	const [user] = J(user_exports);
 	const username = user.name || "my friend";
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: Header_module_default.root,
@@ -10424,10 +10427,9 @@ var App_default = () => {
 };
 //#endregion
 //#region src/main.tsx
-O(parent_exports);
-O(child_exports);
-O(grandChild_exports);
-O(user_exports);
-console.info("after registerThunk");
-(0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(D, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(App_default, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Parent_default, {})] }) }));
+z(parent_exports);
+z(child_exports);
+z(grandChild_exports);
+z(user_exports);
+(0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(R, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(App_default, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Parent_default, {})] }) }));
 //#endregion

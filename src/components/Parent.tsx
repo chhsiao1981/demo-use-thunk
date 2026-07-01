@@ -1,15 +1,16 @@
-import { genID, getState, useThunk } from "@chhsiao1981/use-thunk";
+import { genID, useThunk } from "@chhsiao1981/use-thunk";
 import { type ChangeEvent, useState } from "react";
 import * as ModParent from "../thunks/parent";
 import * as ModUser from "../thunks/user";
 import Child from "./Child";
 
 export default () => {
-  const useParent = useThunk<ModParent.State, typeof ModParent>(ModParent);
-  const [parent, doParent, parentID] = getState(useParent);
+  const [parent, doParent, parentID] = useThunk<
+    ModParent.State,
+    typeof ModParent
+  >(ModParent);
 
-  const useUser = useThunk<ModUser.State, typeof ModUser>(ModUser);
-  const [user, doUser, userID] = getState(useUser);
+  const [user, doUser] = useThunk<ModUser.State, typeof ModUser>(ModUser);
 
   const [childID0] = useState(() => genID());
   const [childID1] = useState(() => genID());
@@ -21,16 +22,16 @@ export default () => {
   const [grandChildID3] = useState(() => genID());
 
   const onClickIncrease = () => {
-    doParent.increase(parentID);
+    doParent.increase();
   };
 
   const onClickDecrease = () => {
-    doParent.decrease(parentID);
+    doParent.decrease();
   };
 
   const onChangeUsername = (e: ChangeEvent<HTMLInputElement>) => {
     const name = e.target?.value;
-    doUser.setName(userID, name);
+    doUser.setName(name);
   };
 
   console.info("Parent: to render:", parentID);

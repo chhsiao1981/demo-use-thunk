@@ -10,18 +10,18 @@ export const defaultState: State = {
   count: 0,
 };
 
-export const increase = (myID: string): Thunk<State> => {
+export const increase = (): Thunk<State> => {
   return (set, get) => {
-    const state = get(myID);
+    const state = get();
     const { count } = state;
-    set(myID, { count: count + 1 });
+    set(null, { count: count + 1 });
   };
 };
 
-export const decrease = (myID: string): Thunk<State> => {
+export const decrease = (): Thunk<State> => {
   return (set, get) => {
-    const state = get(myID);
+    const state = get();
     const { count } = state;
-    set(myID, { count: count - 1 });
+    set(null, { count: count - 1 });
   };
 };

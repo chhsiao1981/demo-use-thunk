@@ -10,6 +10,12 @@ export default () => {
     <div className={styles.root}>
       <span className={styles.username}>Hi～ {username}～</span>
       <a
+        className={styles["tic-tac-toe"]}
+        href="https://chhsiao1981.github.io/demo-use-thunk-tic-tac-toe/"
+      >
+        tic-tac-toe
+      </a>
+      <a
         href="https://github.com/chhsiao1981/demo-use-thunk"
         className={styles.github}
       >

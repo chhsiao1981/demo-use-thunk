@@ -407,213 +407,205 @@ var require_react = /* @__PURE__ */ __commonJSMin(((exports, module) => {
 	module.exports = require_react_production();
 }));
 //#endregion
-//#region node_modules/react/cjs/react-jsx-runtime.production.js
-/**
-* @license React
-* react-jsx-runtime.production.js
-*
-* Copyright (c) Meta Platforms, Inc. and affiliates.
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*/
-var require_react_jsx_runtime_production = /* @__PURE__ */ __commonJSMin(((exports) => {
-	var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
-	function jsxProd(type, config, maybeKey) {
-		var key = null;
-		void 0 !== maybeKey && (key = "" + maybeKey);
-		void 0 !== config.key && (key = "" + config.key);
-		if ("key" in config) {
-			maybeKey = {};
-			for (var propName in config) "key" !== propName && (maybeKey[propName] = config[propName]);
-		} else maybeKey = config;
-		config = maybeKey.ref;
-		return {
-			$$typeof: REACT_ELEMENT_TYPE,
-			type,
-			key,
-			ref: void 0 !== config ? config : null,
-			props: maybeKey
-		};
-	}
-	exports.Fragment = REACT_FRAGMENT_TYPE;
-	exports.jsx = jsxProd;
-	exports.jsxs = jsxProd;
-}));
-//#endregion
-//#region node_modules/react/jsx-runtime.js
-var require_jsx_runtime = /* @__PURE__ */ __commonJSMin(((exports, module) => {
-	module.exports = require_react_jsx_runtime_production();
-}));
-//#endregion
 //#region node_modules/@chhsiao1981/use-thunk/dist/index.js
-var import_react = require_react();
-var import_jsx_runtime = require_jsx_runtime(), o = (e) => {
+var import_react = require_react(), r = (e) => {
 	if (typeof e != "object" || !e) return e;
 	if (e instanceof Date) return new Date(e.getTime());
-	if (Array.isArray(e)) return e.map((e) => o(e));
+	if (Array.isArray(e)) return e.map((e) => r(e));
 	let t = {};
-	for (let n in e) e.hasOwnProperty(n) && (t[n] = o(e[n]));
+	for (let n in e) e.hasOwnProperty(n) && (t[n] = r(e[n]));
 	return t;
-}, s = 1, c = () => (s += 1, `${s}`), l = "@chhsiao1981/use-thunk/SET_DEFAULT_ID", u = (e) => ({
+}, i = 1, a = () => (i += 1, `${i}`), o = (e, t) => {
+	for (let [n, r] of Object.entries(t)) if (e[n] !== r) return !1;
+	return !0;
+}, s = (e, t) => {
+	for (let [n, r] of Object.entries(t)) if (e[n] !== r) return !1;
+	return !0;
+}, c = (e, t) => typeof e == "string" || e == null ? [e, t] : [void 0, e], l = "@chhsiao1981/use-thunk/REMOVE", u = (e) => (t, n, r, i, a) => {
+	let o = M(e, a());
+	o && t(d(o));
+}, d = (e) => ({
 	id: e,
 	type: l
-}), d = (e, t) => {
+}), f = (e, t) => {
+	let { id: n } = t;
+	return !n || !e.nodes[n] ? e : (delete e.nodes[n], e.defaultID === n && (e.defaultID = null), e);
+}, p = "@chhsiao1981/use-thunk/SET_DEFAULT_ID", m = (e) => ({
+	id: e,
+	type: p
+}), h = (e, t) => {
 	let { id: n } = t;
 	return e.defaultID = n, e;
-}, f = (e, t) => typeof e == "string" || e == null ? [e, t] : [void 0, e], p = "@chhsiao1981/use-thunk/INIT", m = (e, t) => ({
+}, g = "@chhsiao1981/use-thunk/UPDATE", _ = (e, t) => (n, r, i, a, o) => {
+	let [s, l] = c(e, t), u = M(s, o());
+	!u || !l || n(v(u, l));
+}, v = (e, t) => ({
 	id: e,
-	type: p,
-	state: t
-}), h = (e, t) => {
-	let { id: n, state: r } = t, i = {
-		id: n,
-		state: r
-	};
-	return e.nodes[n] = i, e;
-}, g = (e, t) => (n, r, i, a, s) => {
-	let [l, d] = f(e, t), { defaultState: p } = s(), h = d || o(p), g = l || c();
-	n(m(g, h));
-	let { defaultID: _ } = s();
-	_ || n(u(g));
-}, _ = (e) => e.defaultID, v = (e, t) => {
-	let n = e || _(t) || c();
-	return t.defaultID ||= n, n;
-}, b = (e, t) => {
-	let n = t || _(e);
+	type: g,
+	data: t
+}), y = (e, t) => {
+	let { id: n, data: r } = t;
+	if (!n) return e;
+	let i = e.nodes[n];
+	if (!i || o(i.stateAndDefaultState.state, r)) return e;
+	let a = Object.assign({}, i.stateAndDefaultState.state, r), { defaultState: s } = i.stateAndDefaultState;
+	return i.stateAndDefaultState = {
+		state: a,
+		defaultState: s
+	}, e;
+}, b = "@chhsiao1981/use-thunk/UPSERT", x = (e, t) => (n, r, i, a, o) => {
+	let [s, l] = c(e, t);
+	l && n(S(j(s, o()), l));
+}, S = (e, t) => ({
+	id: e,
+	type: b,
+	data: t
+}), C = (e, t) => {
+	let { id: n, data: i } = t;
+	if (!n) return e;
+	A(e, n, !0), e.nodes[n] || V(n, r(e.defaultState), e, !1);
+	let a = e.nodes[n];
+	if (o(a.stateAndDefaultState.state, i)) return e;
+	let s = Object.assign({}, a.stateAndDefaultState.state, i), { defaultState: c } = a.stateAndDefaultState;
+	return a.stateAndDefaultState = {
+		state: s,
+		defaultState: c
+	}, e;
+}, w = {
+	init: q,
+	update: _,
+	upsert: x,
+	remove: u,
+	setDefaultID: m,
+	_setDefaultID: m
+}, T = { _setDefaultID: m }, E = Object.keys(T), D = {}, O = (e, t) => {
+	let n = Object.keys(e).filter((t) => typeof e[t] == "function" && !T[t]).reduce((n, r) => {
+		let i = e[r];
+		return n[r] = (...e) => t(i(...e)), n;
+	}, {});
+	return Object.keys(w).reduce((e, n) => {
+		if (e[n]) return e;
+		let r = w[n];
+		return e[n] = (...e) => t(r(...e)), e;
+	}, n), D[e.name] = n, n;
+}, k = (e) => D[e], A = (e, t, n) => {
+	if (!e.defaultID) {
+		if (n) {
+			e.defaultID = t;
+			return;
+		}
+		k(e.name)._setDefaultID(t);
+	}
+}, j = (e, t) => M(e, t) || a(), M = (e, t) => e || N(t), N = (e) => e.defaultID, F = (e, t) => {
+	let n = M(t, e);
 	if (!n) return null;
 	let r = e.nodes[n];
-	return r ? r.state : null;
-}, x = (e, t) => {
-	let n = v(t, e), r = b(e, n);
-	if (r) return r;
-	let i = o(e.defaultState), a = {
-		id: n,
-		state: i
+	return r ? r.stateAndDefaultState.state : null;
+}, I = (e, t) => e.nodes[t]?.stateAndDefaultState, L = (e, t, n) => (n.subscribes[t] || (n.subscribes[t] = z(t, n)), n.subscribes[t].listeners.push(e), () => {
+	let r = n.subscribes[t], i = r.listeners.length;
+	r.listeners = r.listeners.filter((t) => t !== e);
+	let a = r.listeners.length;
+	i !== a && a === 0 && delete n.subscribes[t];
+}), R = (e) => {
+	e.map((e) => {
+		e();
+	});
+}, z = (e, t) => t.subscribes[e] ? t.subscribes[e] : {
+	listeners: [],
+	subscribe: (n) => L(n, e, t),
+	getSnapshot: () => I(t, e),
+	emitChange: (e) => R(e)
+}, B = (e, t, n) => {
+	let r = n.nodes[e];
+	if (r && s(r.stateAndDefaultState.state, t)) return r;
+	let i = e === n.defaultID ? t : F(n);
+	return n.subscribes[e] = z(e, n), {
+		id: e,
+		stateAndDefaultState: {
+			state: t,
+			defaultState: i
+		}
 	};
-	return e.nodes[n] = a, i;
-}, S = (e, t) => {
-	let [n, r] = e, i = v(t, n);
-	return [
-		x(n, i),
-		r,
-		i
-	];
-}, C = "@chhsiao1981/use-thunk/UPDATE", w = (e, t) => (n, r, i, a, o) => {
-	let [s, c] = f(e, t), l = s || _(o());
-	!l || !c || n(T(l, c));
-}, T = (e, t) => ({
+}, V = (e, t, n, r) => {
+	let i = n.nodes[e], a = n.subscribes[e], o = B(e, t, n);
+	i !== o && (n.nodes[e] = o, !(r || !a) && a.emitChange(a.listeners));
+}, H = (e, t, n) => {
+	A(e, t, n), !e.nodes[t] && V(t, r(e.defaultState), e, n);
+}, U = (e, t) => {
+	let n = j(t, e);
+	return H(e, n, !1), F(e, n);
+}, W = "@chhsiao1981/use-thunk/INIT", G = (e, t) => ({
 	id: e,
-	type: C,
-	data: t
-}), E = (e, t) => {
-	let { id: n, data: r } = t, i = e.nodes[n];
-	if (!i) return e;
-	let a = Object.assign({}, i.state, r), o = Object.assign({}, i, { state: a });
-	return e.nodes[n] = o, e;
-}, D = "@chhsiao1981/use-thunk/REMOVE", O = (e) => (t, n, r, i, a) => {
-	let o = e || _(a());
-	o && t(k(o));
-}, k = (e) => ({
-	id: e,
-	type: D
-}), A = (e, t) => {
-	let { id: n } = t;
-	return e.nodes[n] ? (delete e.nodes[n], e.defaultID === n && (e.defaultID = null), e) : e;
-}, j = "@chhsiao1981/use-thunk/UPSERT", M = (e, t) => (n, r, i, a, o) => {
-	let [s, c] = f(e, t);
-	c && n(N(v(s, o()), c));
-}, N = (e, t) => ({
-	id: e,
-	type: j,
-	data: t
-}), P = (e, t) => {
-	let { id: n, data: r } = t, i = e.nodes[n] ?? {
-		id: n,
-		state: o(e.defaultState)
-	}, a = Object.assign({}, i.state, r), s = Object.assign({}, i, { state: a });
-	return e.nodes[n] = s, e;
-}, F = {
-	init: g,
-	update: w,
-	upsert: M,
-	remove: O,
-	setDefaultID: u
-}, I = {
-	theMap: {},
-	theList: []
-}, R = (e) => {
-	let { modules: t, children: n } = e, o = t || I.theList;
-	if (o.length === 0) return n;
-	let s = o[0], { context: c, moduleState: l } = I.theMap[s], [u, d] = (0, import_react.useState)(() => ({ current: l })), f = (0, import_react.useMemo)(() => ({
-		refModuleState: u,
-		setRefModuleState: d
-	}), [u]), p = o.length === 1 ? n : R({
-		modules: o.slice(1),
-		children: n
-	});
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(c.Provider, {
-		value: f,
-		children: p
-	});
-}, z = (t) => {
-	let { name: n, defaultState: r } = t;
-	if (I.theMap[n]) {
+	type: W,
+	state: t
+}), K = (e, t) => {
+	let { id: n, state: i } = t;
+	return n ? (A(e, n, !0), V(n, i || r(e.defaultState), e, !1), e) : e;
+}, q = (e, t) => (n) => {
+	let [r, i] = c(e, t);
+	n(G(r || a(), i));
+}, J = { theMap: {} }, Y = (e) => J.theMap[e].moduleState, X = (e, t = !1) => {
+	let { name: n, defaultState: r } = e;
+	if (J.theMap[n]) {
 		console.warn("registerThunk: already init:", n);
 		return;
 	}
 	let i = {
-		name: t.name,
+		name: e.name,
 		nodes: {},
-		defaultState: r
-	}, a = (0, import_react.createContext)({
-		refModuleState: { current: i },
-		setRefModuleState: () => {}
-	});
-	I.theMap[n] = {
-		context: a,
-		moduleState: i
-	}, I.theList = Object.keys(I.theMap), console.info("registerThunk: done:", n);
-}, B = {}, V = (e, t) => {
-	let n = Object.keys(e).filter((t) => typeof e[t] == "function").reduce((n, r) => {
-		let i = e[r];
-		return n[r] = (...e) => t(i(...e)), n;
-	}, {});
-	return Object.keys(F).reduce((e, n) => {
-		if (e[n]) return e;
-		let r = F[n];
-		return e[n] = (...e) => t(r(...e)), e;
-	}, n), B[e.name] = n, n;
-}, U = {
-	[p]: h,
-	[C]: E,
-	[D]: A,
-	[j]: P,
-	[l]: d
-}, W = (e, t) => U[t.type] ? U[t.type](e, t) : e, G = (e) => {
-	let { context: r } = I.theMap[e], { refModuleState: i, setRefModuleState: a } = (0, import_react.useContext)(r), o = (0, import_react.useCallback)(() => i.current, [i.current]), s = (0, import_react.useCallback)((e) => b(o(), e), [o]), c = (0, import_react.useCallback)((e) => x(o(), e), [o]), l = (0, import_react.useCallback)((e) => {
+		defaultState: r,
+		subscribes: {},
+		isIDBased: t
+	};
+	J.theMap[n] = { moduleState: i }, E.map((t) => {
+		e[t] && console.error(`RESERVED THUNK FUNC (${n}): ${t} is a reserved thunk function. please rename to other name`);
+	}), console.info("registerThunk: done:", n);
+}, Z = {
+	[W]: K,
+	[g]: y,
+	[l]: f,
+	[b]: C,
+	[p]: h
+}, Q = (e, t) => Z[t.type] ? Z[t.type](e, t) : e, $ = (t, r) => {
+	let i = Y(t), a = i.subscribes[r], o = (0, import_react.useSyncExternalStore)(a.subscribe, a.getSnapshot), s = (0, import_react.useCallback)(() => i, []), c = (0, import_react.useCallback)((e) => F(s(), e), []), l = (0, import_react.useCallback)((e) => U(s(), e), []), u = (0, import_react.useCallback)((e) => {
 		if (typeof e == "function") {
-			e(u, c, s, l, o);
+			e(d, l, c, u, s);
 			return;
 		}
-		a({ current: W(o(), e) });
-	}, [o]), u = (0, import_react.useCallback)((e, t) => {
+		let { id: t } = e, n = s(), { defaultID: r } = n, i = n.subscribes[t];
+		Q(n, e);
+		let { defaultID: a, isIDBased: o } = n, f = !o && (r !== a || t === a);
+		if (f) {
+			let e = F(n);
+			for (let [t, r] of Object.entries(n.nodes)) {
+				let { state: t } = r.stateAndDefaultState;
+				r.stateAndDefaultState = {
+					state: t,
+					defaultState: e
+				};
+			}
+		}
+		if (i?.emitChange(i.listeners), f) for (let [e, r] of Object.entries(n.subscribes)) e !== t && r.emitChange(r.listeners);
+	}, []), d = (0, import_react.useCallback)((e, t) => {
 		if (typeof e == "string" || e == null) {
 			if (!t) return;
-			l(M(e, t));
+			u(x(e, t));
 			return;
 		}
-		l(e);
-	}, [l]);
-	return [i, u];
-}, K = (e) => {
-	let { name: t } = e, [n, i] = G(t);
-	B[t] || V(e, i);
-	let a = B[t];
-	return (0, import_react.useMemo)(() => [n, a], [n]);
-}, J = (e, t) => {
-	let [n, i] = K(e);
-	return (0, import_react.useMemo)(() => S([n.current, i], t), [n, t]);
+		u(e);
+	}, []);
+	return [o, d];
+}, ee = (e, n) => {
+	let { name: r } = e, i = Y(r), a = j(n, i);
+	H(i, a, !0);
+	let [o, s] = $(r, a);
+	D[r] || O(e, s);
+	let c = D[r];
+	return (0, import_react.useMemo)(() => [
+		o.state,
+		c,
+		a
+	], [o, a]);
 };
 //#endregion
 //#region node_modules/scheduler/cjs/scheduler.production.js
@@ -10115,15 +10107,41 @@ var App_module_default = {
 	card: "_card_epm92_7"
 };
 //#endregion
+//#region src/const.ts
+var MAX_INTERVAL_MS = 2e3;
+//#endregion
 //#region src/thunks/parent.ts
 var parent_exports = /* @__PURE__ */ __exportAll({
 	decrease: () => decrease$2,
+	decreaseIntervalMS: () => decreaseIntervalMS$1,
 	defaultState: () => defaultState$3,
 	increase: () => increase$2,
+	increaseIntervalMS: () => increaseIntervalMS$1,
+	loop: () => loop$1,
 	name: () => name$3
 });
 var name$3 = "demo-use-thunk/parent";
-var defaultState$3 = { count: 0 };
+var defaultState$3 = {
+	count: 1,
+	interval_ms: 400,
+	value: 0
+};
+var loop$1 = () => {
+	return (set, get) => {
+		const { interval_ms, abort: preAbort } = get();
+		if (preAbort) preAbort.abort();
+		const abort = new AbortController();
+		set(null, { abort });
+		const theLoop = setInterval(() => {
+			console.info("parent.loop: now:", (/* @__PURE__ */ new Date()).getMilliseconds());
+			const { value, count } = get();
+			set(null, { value: value + count });
+		}, interval_ms);
+		abort.signal.addEventListener("abort", () => {
+			clearInterval(theLoop);
+		});
+	};
+};
 var increase$2 = () => {
 	return (set, get) => {
 		const { count } = get();
@@ -10134,6 +10152,22 @@ var decrease$2 = () => {
 	return (set, get) => {
 		const { count } = get();
 		set(null, { count: count - 1 });
+	};
+};
+var increaseIntervalMS$1 = () => {
+	return (set, get) => {
+		const { interval_ms } = get();
+		if (interval_ms >= 2e3) return;
+		set(null, { interval_ms: interval_ms + 100 });
+		set(loop$1());
+	};
+};
+var decreaseIntervalMS$1 = () => {
+	return (set, get) => {
+		const { interval_ms } = get();
+		if (interval_ms < 100) return;
+		set(null, { interval_ms: interval_ms - 100 });
+		set(loop$1());
 	};
 };
 //#endregion
@@ -10154,27 +10188,76 @@ var setName = (name) => {
 //#region src/thunks/child.ts
 var child_exports = /* @__PURE__ */ __exportAll({
 	decrease: () => decrease$1,
+	decreaseIntervalMS: () => decreaseIntervalMS,
 	defaultState: () => defaultState$1,
 	increase: () => increase$1,
+	increaseIntervalMS: () => increaseIntervalMS,
+	init: () => init,
+	loop: () => loop,
 	name: () => name$1
 });
 var name$1 = "demo-use-thunk/child";
 var defaultState$1 = {
 	name: "",
-	count: 0
+	count: 1,
+	interval_ms: 400,
+	value: 0
 };
-var increase$1 = (myID) => {
-	return (set, get) => {
-		const { count } = get(myID);
-		set(myID, { count: count + 1 });
+var init = (id, count, interval_ms) => {
+	return (set) => {
+		set(id, {
+			count,
+			interval_ms
+		});
 	};
 };
-var decrease$1 = (myID) => {
+var loop = (id) => {
 	return (set, get) => {
-		const { count } = get(myID);
-		set(myID, { count: count - 1 });
+		const { interval_ms, abort: preAbort } = get(id);
+		if (preAbort) preAbort.abort();
+		const abort = new AbortController();
+		set(id, { abort });
+		const theLoop = setInterval(() => {
+			console.info(`child.loop (${id}): now:`, (/* @__PURE__ */ new Date()).getMilliseconds());
+			const { value, count } = get(id);
+			set(id, { value: value + count });
+		}, interval_ms);
+		abort.signal.addEventListener("abort", () => {
+			clearInterval(theLoop);
+		});
 	};
 };
+var increase$1 = (id) => {
+	return (set, get) => {
+		const { count } = get(id);
+		set(id, { count: count + 1 });
+	};
+};
+var decrease$1 = (id) => {
+	return (set, get) => {
+		const { count } = get(id);
+		set(id, { count: count - 1 });
+	};
+};
+var increaseIntervalMS = (id) => {
+	return (set, get) => {
+		const { interval_ms } = get(id);
+		if (interval_ms >= 2e3) return;
+		set(id, { interval_ms: interval_ms + 100 });
+		set(loop(id));
+	};
+};
+var decreaseIntervalMS = (id) => {
+	return (set, get) => {
+		const { interval_ms } = get(id);
+		if (interval_ms < 100) return;
+		set(id, { interval_ms: interval_ms - 100 });
+		set(loop(id));
+	};
+};
+//#endregion
+//#region src/utils.ts
+var rand09 = () => Math.floor(Math.random() * 10);
 //#endregion
 //#region src/thunks/grandChild.ts
 var grandChild_exports = /* @__PURE__ */ __exportAll({
@@ -10198,23 +10281,48 @@ var decrease = (myID) => {
 	};
 };
 //#endregion
-//#region src/components/GrandGrandChild.tsx
-var GrandGrandChild_default = (0, import_react.memo)((props) => {
-	const { grandChildID, grandChild } = props;
-	console.info("GrandGrandChild: to render (from grandChild):", grandChildID);
-	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
-		"GrandGrandChild from ",
-		grandChildID,
-		": count: ",
-		grandChild.count
-	] });
-});
+//#region node_modules/react/cjs/react-jsx-runtime.production.js
+/**
+* @license React
+* react-jsx-runtime.production.js
+*
+* Copyright (c) Meta Platforms, Inc. and affiliates.
+*
+* This source code is licensed under the MIT license found in the
+* LICENSE file in the root directory of this source tree.
+*/
+var require_react_jsx_runtime_production = /* @__PURE__ */ __commonJSMin(((exports) => {
+	var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element"), REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
+	function jsxProd(type, config, maybeKey) {
+		var key = null;
+		void 0 !== maybeKey && (key = "" + maybeKey);
+		void 0 !== config.key && (key = "" + config.key);
+		if ("key" in config) {
+			maybeKey = {};
+			for (var propName in config) "key" !== propName && (maybeKey[propName] = config[propName]);
+		} else maybeKey = config;
+		config = maybeKey.ref;
+		return {
+			$$typeof: REACT_ELEMENT_TYPE,
+			type,
+			key,
+			ref: void 0 !== config ? config : null,
+			props: maybeKey
+		};
+	}
+	exports.Fragment = REACT_FRAGMENT_TYPE;
+	exports.jsx = jsxProd;
+	exports.jsxs = jsxProd;
+}));
 //#endregion
 //#region src/components/GrandChild.tsx
+var import_jsx_runtime = (/* @__PURE__ */ __commonJSMin(((exports, module) => {
+	module.exports = require_react_jsx_runtime_production();
+})))();
 var GrandChild_default = (0, import_react.memo)((props) => {
 	const { theID } = props;
-	const [grandChild, doGrandChild] = J(grandChild_exports, theID);
-	const [user] = J(user_exports);
+	const [grandChild, doGrandChild] = ee(grandChild_exports, theID);
+	const [user] = ee(user_exports);
 	const onClickIncrease = () => {
 		doGrandChild.increase(theID);
 	};
@@ -10248,53 +10356,84 @@ var GrandChild_default = (0, import_react.memo)((props) => {
 				theID,
 				"): -"
 			]
-		}),
-		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(GrandGrandChild_default, {
-			grandChildID: theID,
-			grandChild
 		})
 	] });
 });
 //#endregion
 //#region src/components/Child.tsx
 var Child_default = (0, import_react.memo)((props) => {
-	const { theID, grandChildID0, grandChildID1 } = props;
-	const [child, doChild] = J(child_exports, theID);
+	const { id, grandChildID0, grandChildID1 } = props;
+	const [child, doChild] = ee(child_exports, id);
+	const { count, value, interval_ms } = child;
 	(0, import_react.useEffect)(() => {
-		doChild.upsert(theID, { name: `child-${theID}` });
+		const count = rand09() + 1;
+		const interval_ms = (rand09() + 1) * 100;
+		doChild.init(id, count, interval_ms);
+		doChild.upsert(id, { name: `child-${id}` });
+		doChild.loop(id);
 	}, []);
 	const onClickIncrease = () => {
-		doChild.increase(theID);
+		doChild.increase(id);
 	};
 	const onClickDecrease = () => {
-		doChild.decrease(theID);
+		doChild.decrease(id);
 	};
-	console.info("Child: to render:", theID);
+	const onClickIncreaseIntervalMS = () => {
+		doChild.increaseIntervalMS(id);
+	};
+	const onClickDecreaseIntervalMS = () => {
+		doChild.decreaseIntervalMS(id);
+	};
+	console.info("Child: to render:", id);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
 		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
 			"Child (",
 			child.name,
-			"): ",
-			child.count
+			"): (count: ",
+			count,
+			" value: ",
+			value,
+			" interval (ms):",
+			" ",
+			interval_ms,
+			")"
 		] }),
-		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 			type: "button",
 			onClick: onClickIncrease,
 			children: [
 				"Child (",
-				theID,
+				id,
 				"): +"
 			]
-		}),
-		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 			type: "button",
 			onClick: onClickDecrease,
 			children: [
 				"Child (",
-				theID,
+				id,
 				"): -"
 			]
-		}),
+		})] }),
+		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+			type: "button",
+			onClick: onClickIncreaseIntervalMS,
+			disabled: interval_ms >= MAX_INTERVAL_MS,
+			children: [
+				"Child (",
+				id,
+				"): interval +100"
+			]
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+			type: "button",
+			onClick: onClickDecreaseIntervalMS,
+			disabled: interval_ms <= 100,
+			children: [
+				"Child (",
+				id,
+				"): interval -100"
+			]
+		})] }),
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(GrandChild_default, { theID: grandChildID0 }),
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(GrandChild_default, { theID: grandChildID1 })
 	] });
@@ -10302,19 +10441,30 @@ var Child_default = (0, import_react.memo)((props) => {
 //#endregion
 //#region src/components/Parent.tsx
 var Parent_default = () => {
-	const [parent, doParent, parentID] = J(parent_exports);
-	const [user, doUser] = J(user_exports);
-	const [childID0] = (0, import_react.useState)(() => c());
-	const [childID1] = (0, import_react.useState)(() => c());
-	const [grandChildID0] = (0, import_react.useState)(() => c());
-	const [grandChildID1] = (0, import_react.useState)(() => c());
-	const [grandChildID2] = (0, import_react.useState)(() => c());
-	const [grandChildID3] = (0, import_react.useState)(() => c());
+	const [parent, doParent, parentID] = ee(parent_exports);
+	const { count, value, interval_ms } = parent;
+	const [user, doUser] = ee(user_exports);
+	const [childID0] = (0, import_react.useState)(() => a());
+	const [childID1] = (0, import_react.useState)(() => a());
+	const [grandChildID0] = (0, import_react.useState)(() => a());
+	const [grandChildID1] = (0, import_react.useState)(() => a());
+	const [grandChildID2] = (0, import_react.useState)(() => a());
+	const [grandChildID3] = (0, import_react.useState)(() => a());
+	(0, import_react.useEffect)(() => {
+		console.info("Parent (init): to doParent.loop");
+		doParent.loop();
+	}, [doParent.loop]);
 	const onClickIncrease = () => {
 		doParent.increase();
 	};
 	const onClickDecrease = () => {
 		doParent.decrease();
+	};
+	const onClickIncreaseIntervalMS = () => {
+		doParent.increaseIntervalMS();
+	};
+	const onClickDecreaseIntervalMS = () => {
+		doParent.decreaseIntervalMS();
 	};
 	const onChangeUsername = (e) => {
 		const name = e.target?.value;
@@ -10326,31 +10476,50 @@ var Parent_default = () => {
 		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
 			"Parent (",
 			parentID,
-			"): ",
-			parent.count
+			"): (count: ",
+			count,
+			" value: ",
+			value,
+			", interval (ms):",
+			" ",
+			interval_ms,
+			")"
 		] }),
-		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", { children: ["My name:", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-			type: "text",
-			onChange: onChangeUsername,
-			value: user.name
+		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", { children: ["My name:", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+				type: "text",
+				onChange: onChangeUsername,
+				value: user.name
+			})] }),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+				type: "button",
+				onClick: onClickIncrease,
+				children: "Parent: count +"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+				type: "button",
+				onClick: onClickDecrease,
+				children: "Parent: count -"
+			})
+		] }),
+		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+			type: "button",
+			onClick: onClickIncreaseIntervalMS,
+			disabled: interval_ms >= MAX_INTERVAL_MS,
+			children: "Parent: interval +100"
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+			type: "button",
+			onClick: onClickDecreaseIntervalMS,
+			disabled: interval_ms <= 100,
+			children: "Parent: interval -100"
 		})] }),
-		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-			type: "button",
-			onClick: onClickIncrease,
-			children: "Parent: +"
-		}),
-		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-			type: "button",
-			onClick: onClickDecrease,
-			children: "Parent: -"
-		}),
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Child_default, {
-			theID: childID0,
+			id: childID0,
 			grandChildID0,
 			grandChildID1
 		}),
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Child_default, {
-			theID: childID1,
+			id: childID1,
 			grandChildID0: grandChildID2,
 			grandChildID1: grandChildID3
 		})
@@ -10360,32 +10529,41 @@ var Parent_default = () => {
 //#region src/assets/github.svg
 var github_default = "data:image/svg+xml,%3csvg%20width='128'%20height='128'%20viewBox='0%200%20128%20128'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M56.7937%2084.9688C44.4187%2083.4688%2035.7%2074.5625%2035.7%2063.0313C35.7%2058.3438%2037.3875%2053.2813%2040.2%2049.9063C38.9812%2046.8125%2039.1687%2040.25%2040.575%2037.5313C44.325%2037.0625%2049.3875%2039.0313%2052.3875%2041.75C55.95%2040.625%2059.7%2040.0625%2064.2937%2040.0625C68.8875%2040.0625%2072.6375%2040.625%2076.0125%2041.6563C78.9187%2039.0313%2084.075%2037.0625%2087.825%2037.5313C89.1375%2040.0625%2089.325%2046.625%2088.1062%2049.8125C91.1062%2053.375%2092.7%2058.1563%2092.7%2063.0313C92.7%2074.5625%2083.9812%2083.2813%2071.4187%2084.875C74.6062%2086.9375%2076.7625%2091.4375%2076.7625%2096.5938L76.7625%20106.344C76.7625%20109.156%2079.1062%20110.75%2081.9187%20109.625C98.8875%20103.156%20112.2%2086.1875%20112.2%2065.1875C112.2%2038.6563%2090.6375%2017%2064.1062%2017C37.575%2017%2016.2%2038.6562%2016.2%2065.1875C16.2%2086%2029.4187%20103.25%2047.2312%20109.719C49.7625%20110.656%2052.2%20108.969%2052.2%20106.438L52.2%2098.9375C50.8875%2099.5%2049.2%2099.875%2047.7%2099.875C41.5125%2099.875%2037.8562%2096.5%2035.2312%2090.2188C34.2%2087.6875%2033.075%2086.1875%2030.9187%2085.9063C29.7937%2085.8125%2029.4187%2085.3438%2029.4187%2084.7813C29.4187%2083.6563%2031.2937%2082.8125%2033.1687%2082.8125C35.8875%2082.8125%2038.2312%2084.5%2040.6687%2087.9688C42.5437%2090.6875%2044.5125%2091.9063%2046.8562%2091.9063C49.2%2091.9063%2050.7%2091.0625%2052.8562%2088.9063C54.45%2087.3125%2055.6687%2085.9063%2056.7937%2084.9688Z'%20fill='white'/%3e%3c/svg%3e";
 var Header_module_default = {
-	root: "_root_jjcw6_1",
-	username: "_username_jjcw6_9",
-	github: "_github_jjcw6_13"
+	root: "_root_1fhy2_1",
+	username: "_username_1fhy2_10",
+	github: "_github_1fhy2_15",
+	"tic-tac-toe": "_tic-tac-toe_1fhy2_25"
 };
 //#endregion
 //#region src/Header.tsx
 var Header_default = () => {
-	const [user] = J(user_exports);
+	const [user] = ee(user_exports);
 	const username = user.name || "my friend";
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		className: Header_module_default.root,
-		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-			className: Header_module_default.username,
-			children: [
-				"Hi～ ",
-				username,
-				"～"
-			]
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
-			href: "https://github.com/chhsiao1981/demo-use-thunk",
-			className: Header_module_default.github,
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
-				"aria-label": "github logo",
-				src: github_default
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+				className: Header_module_default.username,
+				children: [
+					"Hi～ ",
+					username,
+					"～"
+				]
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+				className: Header_module_default["tic-tac-toe"],
+				href: "https://chhsiao1981.github.io/demo-use-thunk-tic-tac-toe/",
+				children: "tic-tac-toe"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+				href: "https://github.com/chhsiao1981/demo-use-thunk",
+				className: Header_module_default.github,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+					"aria-label": "github logo",
+					src: github_default
+				})
 			})
-		})]
+		]
 	});
 };
 //#endregion
@@ -10427,9 +10605,9 @@ var App_default = () => {
 };
 //#endregion
 //#region src/main.tsx
-z(parent_exports);
-z(child_exports);
-z(grandChild_exports);
-z(user_exports);
-(0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_react.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(R, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(App_default, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Parent_default, {})] }) }));
+X(parent_exports);
+X(child_exports);
+X(grandChild_exports);
+X(user_exports);
+(0, import_client.createRoot)(document.getElementById("root")).render(/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_react.StrictMode, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(App_default, {}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Parent_default, {})] }));
 //#endregion

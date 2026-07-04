@@ -1,4 +1,4 @@
-import { registerThunk, ThunkContext } from "@chhsiao1981/use-thunk";
+import { registerThunk } from "@chhsiao1981/use-thunk";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
@@ -16,9 +16,7 @@ registerThunk(ModUser);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ThunkContext>
-      <App />
-      <Parent />
-    </ThunkContext>
+    <App />
+    <Parent />
   </StrictMode>,
 );

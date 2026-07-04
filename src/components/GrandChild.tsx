@@ -2,7 +2,6 @@ import { useThunk } from "@chhsiao1981/use-thunk";
 import { memo } from "react";
 import * as ModGrandChild from "../thunks/grandChild";
 import * as ModUser from "../thunks/user";
-import GrandGrandChild from "./GrandGrandChild";
 
 type Props = {
   theID: string;
@@ -39,7 +38,6 @@ export default memo((props: Props) => {
       <button type="button" onClick={onClickDecrease}>
         GrandChild ({theID}): -
       </button>
-      <GrandGrandChild grandChildID={theID} grandChild={grandChild} />
     </>
   );
 });

@@ -1,5 +1,5 @@
-import { genID, useThunk } from "@chhsiao1981/use-thunk";
 import { type ChangeEvent, useEffect, useState } from "react";
+import { genID, useThunk } from "use-thunk";
 import { MAX_INTERVAL_MS, MIN_INTERVAL_MS } from "../const";
 import * as ModParent from "../thunks/parent";
 import * as ModUser from "../thunks/user";

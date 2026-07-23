@@ -1,5 +1,5 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
 import { memo, useEffect } from "react";
+import { useThunk } from "use-thunk";
 import { MAX_INTERVAL_MS, MIN_INTERVAL_MS } from "../const";
 import * as ModChild from "../thunks/child";
 import { rand09 } from "../utils";

@@ -1,4 +1,4 @@
-import type { State as _State, Thunk } from "@chhsiao1981/use-thunk";
+import type { State as _State, Thunk } from "use-thunk";
 import { MAX_INTERVAL_MS, MIN_INTERVAL_MS } from "../const";
 
 export const name = "demo-use-thunk/parent";

@@ -1,6 +1,6 @@
-import { registerThunk } from "@chhsiao1981/use-thunk";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { registerThunk } from "use-thunk";
 import "./index.css";
 import App from "./App.tsx";
 import Parent from "./components/Parent.tsx";

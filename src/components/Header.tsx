@@ -1,7 +1,7 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
-import githubLogo from "./assets/github.svg";
+import { useThunk } from "use-thunk";
+import githubLogo from "../assets/github.svg";
+import * as ModUser from "../thunks/user";
 import styles from "./Header.module.css";
-import * as ModUser from "./thunks/user";
 
 export default () => {
   const [user] = useThunk<ModUser.State, typeof ModUser>(ModUser);

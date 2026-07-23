@@ -1,5 +1,5 @@
-import { useThunk } from "@chhsiao1981/use-thunk";
 import { memo } from "react";
+import { useThunk } from "use-thunk";
 import * as ModGrandChild from "../thunks/grandChild";
 import * as ModUser from "../thunks/user";
 

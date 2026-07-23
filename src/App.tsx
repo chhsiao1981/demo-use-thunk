@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./App.module.css";
+import Header from "./components/Header";
 import Parent from "./components/Parent";
-import Header from "./Header";
 
 export default () => {
   const [count, setCount] = useState(0);
